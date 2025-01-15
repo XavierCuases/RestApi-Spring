@@ -20,22 +20,22 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    public Persona buscarPorId(@PathVariable("id") Integer id){
+    public Persona buscarPorId(@PathVariable("id") Integer id) {
         return service.buscarPorId(id);
     }
 
     @PostMapping
-    public Persona guardar(@RequestBody Persona persona){
+    public Persona guardar(@RequestBody Persona persona) {
         return service.guardar(persona);
     }
 
     @PutMapping("/{id}")
-    public Persona actualizar(@PathVariable("id") Integer id, @RequestBody Persona persona){
+    public Persona actualizar(@PathVariable("id") Integer id, @RequestBody Persona persona) {
         return service.actualizar(id, persona);
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable("id") Integer id){
+    public void eliminar(@PathVariable("id") Integer id) {
         service.eliminar(id);
     }
 }

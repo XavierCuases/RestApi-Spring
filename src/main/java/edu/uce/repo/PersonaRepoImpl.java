@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class PersonaRepoImpl implements IPersonaRepo{
+public class PersonaRepoImpl implements IPersonaRepo {
 
     private List<Persona> listaPersonas;
 
-    public PersonaRepoImpl(){
+    public PersonaRepoImpl() {
         this.listaPersonas = new ArrayList<>();
         listaPersonas.add(new Persona(1, "Jean", "Marchesini"));
         listaPersonas.add(new Persona(2, "Xavier", "Cuases"));
@@ -20,17 +20,17 @@ public class PersonaRepoImpl implements IPersonaRepo{
 
     @Override
     public Persona guardar(Persona persona) {
-       this.listaPersonas.add(persona);
-       return persona;
+        this.listaPersonas.add(persona);
+        return persona;
     }
 
     @Override
     public Persona actualizar(Integer id, Persona persona) {
-        for(Persona p : this.listaPersonas){
-            if(p.getIdPersona() == id){
-                this.listaPersonas.remove(persona);
-                this.listaPersonas.add(new Persona(id, persona.getNombre(), persona.getApellido()));
-                return persona;
+        for (int i = 0; i < this.listaPersonas.size(); i++) {
+            Persona p = this.listaPersonas.get(i);
+            if (p.getIdPersona().equals(id)) {
+                this.listaPersonas.set(i, new Persona(id, persona.getNombre(), persona.getApellido()));
+                return this.listaPersonas.get(i);
             }
         }
         return new Persona();
@@ -43,22 +43,14 @@ public class PersonaRepoImpl implements IPersonaRepo{
 
     @Override
     public Persona buscarPorId(Integer id) {
-        for(Persona p : this.listaPersonas){
-            if(p.getIdPersona() == id){
-                return p;
-            }
-        }
-        return new Persona();
+        return this.listaPersonas.stream()
+                .filter(p -> p.getIdPersona().equals(id))
+                .findFirst()
+                .orElse(new Persona());
     }
 
     @Override
     public void eliminar(Integer id) {
-        for(Persona p : this.listaPersonas){
-            if(p.getIdPersona() == id){
-                this.listaPersonas.remove(p);
-                return;
-            }
-        }
+        this.listaPersonas.removeIf(p -> p.getIdPersona().equals(id));
     }
-
 }
